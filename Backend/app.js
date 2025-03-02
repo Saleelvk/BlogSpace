@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(cookieParser()); 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://blogspace-jh9a.onrender.com"], 
+    origin: ["http://localhost:5173", "https://blogspace-jh9a.onrender.com"],
+    methods: ["GET", "POST", "PUT", "DELETE"],  // Ensure POST is allowed
     credentials: true
 }));
 
