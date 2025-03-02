@@ -10,9 +10,10 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(cookieParser()); 
 app.use(cors({
-    origin: "http://localhost:5173", 
-    credentials: true    
+    origin: ["http://localhost:5173", "https://blogspace-jh9a.onrender.com"], 
+    credentials: true
 }));
+
 
 // Routes
 const authRoute = require("./routes/authRoute");
