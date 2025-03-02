@@ -8,7 +8,7 @@ import Blogs from "./pages/Blogs";
 import Contact from "./pages/Contact";
 import ReadingPage from "./pages/ReadingPage";
 import AuthPage from "./Components/AuthPage";
-import CreateBlog from "./Components/createBlog";
+import CreateBlog from "./Components/CreateBlog";
 import Editpost from "./Components/Editpost";
 import UserProfile from './Components/UserProfile';
 import { AuthProvider } from './Context/AuthProvider';
