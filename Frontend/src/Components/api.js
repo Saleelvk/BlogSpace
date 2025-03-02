@@ -1,11 +1,9 @@
-
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: "https://blogspace-jh9a.onrender.com/api/v1", // Updated to deployed URL
 });
 
-const imgUrl = "http://localhost:3000"; 
+const imgUrl = "https://blogspace-jh9a.onrender.com"; // Updated image base URL
 
 export { api, imgUrl };
- 
