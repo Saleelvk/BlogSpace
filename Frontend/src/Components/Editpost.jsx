@@ -10,7 +10,7 @@ function EditPost() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
-  const [previewImage, setPreviewImage] = useState(null); // Store existing image URL
+  const [previewImage, setPreviewImage] = useState(null); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -19,14 +19,14 @@ function EditPost() {
     const fetchPost = async () => {
       try {
         setLoading(true);
-        const token = localStorage.getItem('token'); // Get token
+        const token = localStorage.getItem('token');
         const response = await api.get(`/post/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
   
         setTitle(response.data.title);
         setContent(response.data.content);
-        setPreviewImage(response.data.image); // Assuming backend returns image URL
+        setPreviewImage(response.data.image);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -40,7 +40,7 @@ function EditPost() {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
-    setPreviewImage(URL.createObjectURL(file)); // Show preview of new image
+    setPreviewImage(URL.createObjectURL(file));
   };
 
   const handleSubmit = async (e) => {
