@@ -5,7 +5,7 @@ const Post = require("../models/post_model");
 // Add a comment
 const addComment = asyncHandler(async (req, res) => {
     const { text } = req.body;
-    const { id } = req.params; // Post ID
+    const { id } = req.params; 
     
     const post = await Post.findById(id);
     if (!post) {
@@ -14,7 +14,7 @@ const addComment = asyncHandler(async (req, res) => {
     
     const comment = await Comment.create({
         text,
-        user: req.user._id, // Attach logged-in user
+        user: req.user._id, 
         post: id,
     });
     
@@ -35,29 +35,27 @@ const getComments = asyncHandler(async (req, res) => {
 // Delete a comment
 // Delete a comment
 const deleteComment = asyncHandler(async (req, res) => {
-    const { id } = req.params; // Comment ID
+    const { id } = req.params; 
     
     const comment = await Comment.findById(id);
     if (!comment) {
         return res.status(404).json({ message: "Comment not found" });
     }
     
-    // Ensure only the owner can delete
+
     if (comment.user.toString() !== req.user._id.toString()) {
         return res.status(403).json({ message: "Unauthorized" });
     }
     
-    // Find the post this comment belongs to
+
     const post = await Post.findById(comment.post);
     if (post) {
-        // Remove the comment ID from the post's comments array
         post.comments = post.comments.filter(
             commentId => commentId.toString() !== id.toString()
         );
         await post.save();
     }
     
-    // Use deleteOne instead of remove
     await Comment.deleteOne({ _id: id });
     
     res.status(200).json({ message: "Comment deleted" });
