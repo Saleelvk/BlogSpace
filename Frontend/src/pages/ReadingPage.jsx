@@ -5,8 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import defaultAvatar from "../assets/images/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette-profile-picture-suitable-social-media-profiles-icons-screensavers-as-templatex9xa_7.avif";
 import blogs from "../assets/images/blog.png";
 import CommentSection from "../Components/CommendSection"; // Import the comment section component
-import { api } from "../Components/api";
-
+import { api, imgUrl } from "../Components/api";
 function ReadingPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -149,7 +148,7 @@ function ReadingPage() {
       {post?.image && (
         <div className="mt-8 overflow-hidden rounded-lg shadow-lg">
         <img
-  src={post.image ? `http://localhost:3000${post.image}` : blogs}
+  src={`${imgUrl}${post.image}`}
   alt={post.title || "Blog Post Image"}
   className="w-full object-cover max-h-[400px]"
 />
