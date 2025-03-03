@@ -199,7 +199,7 @@ const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility
   };
 
   return (
-    <div className="relative flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200">
+    <div className="group relative flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200">
       {/* Image */}
       <div className="relative overflow-hidden border-b">
         <img
@@ -227,24 +227,8 @@ const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility
           <div className="text-xs text-gray-500">{new Date(post.createdAt).toDateString()}</div>
         </div>
 
-        {/* VISIBILITY TOGGLE - Made much more visible */}
-        {isAuthor && (
-          <div className="mt-4 mb-3 p-2 bg-blue-50 rounded-md border border-blue-200">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-blue-700">
-                Post Status: {post.visibility === "private" ? "Private" : "Public"}
-              </span>
-              <button
-                onClick={() => toggleVisibility(post._id)}
-                className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors"
-              >
-                Toggle Visibility
-              </button>
-            </div>
-          </div>
-        )}
-
-        <div className="flex justify-between items-center pt-4 mt-auto">
+        <div className="flex justify-between items-center pt-6 mt-auto">
+          {/* Left side with likes and views */}
           <div className="flex items-center gap-4">
             <button
               onClick={() => handleLike(post._id)}
@@ -260,6 +244,21 @@ const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility
             </div>
           </div>
 
+          {/* Middle - Toggle button for authors only */}
+          {isAuthor && (
+            <button
+              onClick={() => toggleVisibility(post._id)}
+              className={`flex items-center text-xs font-medium px-2 py-1 rounded-md transition-all ${
+                post.visibility === "private" 
+                  ? "bg-green-100 text-green-700 border border-green-300" 
+                  : "bg-gray-100 text-gray-700 border border-gray-300"
+              }`}
+            >
+              {post.visibility === "private" ? "Private" : "Public"}
+            </button>
+          )}
+
+          {/* Right side with read more */}
           <a
             href={`/post/${post._id}`}
             onClick={handleReadMore}
@@ -272,5 +271,4 @@ const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility
     </div>
   );
 };
-
 export default Blogs;
