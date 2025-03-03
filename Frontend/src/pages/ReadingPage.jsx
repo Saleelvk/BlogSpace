@@ -144,7 +144,7 @@ function ReadingPage() {
         </div>
       </div>
 
-      {/* Image */}
+     {/* Image */}
       {post?.image && (
         <div className="mt-8 overflow-hidden rounded-lg shadow-lg">
         <img
