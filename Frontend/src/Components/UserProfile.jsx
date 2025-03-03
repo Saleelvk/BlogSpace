@@ -16,7 +16,7 @@ const UserProfile = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
 
-  // Fetch user profile data on component mount
+ 
   useEffect(() => {
     fetchUserProfile();
   }, []);
@@ -26,7 +26,7 @@ const UserProfile = () => {
       setLoading(true);
       setError(null);
       
-      // Get the auth token from local storage
+
       const token = localStorage.getItem('token');
       
       if (!token) {
@@ -89,7 +89,7 @@ const UserProfile = () => {
       setIsEditing(false);
       setLoading(false);
       
-      // Clear success message after 3 seconds
+
       setTimeout(() => {
         setSuccessMessage('');
       }, 3000);
@@ -121,7 +121,7 @@ const UserProfile = () => {
         
         await api.delete("/user/profile", config);
         
-        // Clear local storage and redirect to login page
+
         localStorage.removeItem('token');
         window.location.href = '/login';
       } catch (err) {
