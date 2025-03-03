@@ -29,7 +29,7 @@ function CreateBlog() {
         formData.append('image', image);
       }
 
-      const token = localStorage.getItem('token'); // Assuming you store the token in localStorage
+      const token = localStorage.getItem('token'); 
       
       const response = await api.post('/post/', formData, {
         headers: {
