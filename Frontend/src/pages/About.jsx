@@ -8,7 +8,7 @@ import Email from '../Components/Email';
 const AlternativeAboutPage = () => {
   return (
     <div className="bg-white  text-black">
-      {/* Hero Section with Overlay */}
+    
       <section className="relative h-96 bg-black">
         <img 
           src="/api/placeholder/1600/800" 
@@ -23,7 +23,7 @@ const AlternativeAboutPage = () => {
         </div>
       </section>
       
-      {/* Mission Statement */}
+    
       <section className="py-16 px-4 mx-auto bg-gray-200 w-full">
         <div className="text-center">
           <h2 className="text-3xl font-semibold text-black  mb-8">Our Mission</h2>
@@ -37,12 +37,12 @@ const AlternativeAboutPage = () => {
       
     
       
-      {/* The Team */}
+
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-semibold text-center text-gray-900 dark:text-white mb-16">Meet Our Team</h2>
           
-          {/* Founder Spotlight */}
+        
           <div className="mb-16 flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/3">
               <div className="relative">
@@ -69,9 +69,9 @@ const AlternativeAboutPage = () => {
             </div>
           </div>
           
-          {/* Team Grid */}
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Team Member 1 */}
+         
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden group">
               <div className="relative h-64 overflow-hidden">
                 <img 
@@ -101,7 +101,7 @@ const AlternativeAboutPage = () => {
               </div>
             </div>
             
-            {/* Team Member 2 */}
+      
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden group">
               <div className="relative h-64 overflow-hidden">
                 <img 
@@ -131,7 +131,7 @@ const AlternativeAboutPage = () => {
               </div>
             </div>
             
-            {/* Team Member 3 */}
+ 
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden group">
               <div className="relative h-64 overflow-hidden">
                 <img 
