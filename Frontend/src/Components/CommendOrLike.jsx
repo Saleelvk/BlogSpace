@@ -42,7 +42,7 @@ const ModernPopularPostsWidget = () => {
     fetchPosts();
   }, []);
 
-  // Get the posts based on active tab
+  
   const getMostViewedPosts = () => {
     return [...posts]
       .sort((a, b) => (b.views || 0) - (a.views || 0))
@@ -56,11 +56,11 @@ const ModernPopularPostsWidget = () => {
   };
 
   const handleViewCount = async (e, postId) => {
-    e.preventDefault(); // Make sure this is included
+    e.preventDefault(); 
     const token = localStorage.getItem("token");
 
     try {
-      // Log to confirm the function is being called
+     
       console.log("Updating view count for post:", postId);
 
       const response = await api.post(
@@ -74,27 +74,27 @@ const ModernPopularPostsWidget = () => {
 
       console.log("View count response:", response.data);
 
-      // Update the posts array with the new view count
+      
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
           post._id === postId ? { ...post, views: response.data.views } : post
         )
       );
 
-      // Navigate to the post detail page
+     
       navigate(`/post/${postId}`);
     } catch (error) {
       console.error("Failed to update view count", error);
-      // Still navigate even if view count fails
+      
       navigate(`/post/${postId}`);
     }
   };
 
-  // Get posts based on active tab
+  
   const activePosts =
     activeTab === "viewed" ? getMostViewedPosts() : getMostCommentedPosts();
 
-  // Helper function to format image URLs
+
   const getImageUrl = (imagePath) => {
     if (!imagePath) return "/api/placeholder/600/400";
     
