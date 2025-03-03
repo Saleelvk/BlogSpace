@@ -38,7 +38,7 @@ const Navbar = () => {
           Blog<span className="text-indigo-600">Space</span>
         </NavLink>
 
-        {/* Desktop Navigation */}
+       
         <nav className="hidden md:flex space-x-8">
           {navLinks.map(({ to, label }) => (
             <NavLink
@@ -55,7 +55,7 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* User & Menu Buttons */}
+     
         <div className="flex items-center space-x-5">
     
 
@@ -113,7 +113,7 @@ const Navbar = () => {
             </NavLink>
           )}
 
-          {/* Hamburger Menu Button */}
+
           <button
             className="md:hidden text-gray-600 hover:text-indigo-600 transition-colors p-2 rounded-lg hover:bg-gray-100"
             onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -124,7 +124,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
+ 
       {isMenuOpen && (
         <nav className="md:hidden bg-white border-t border-gray-100 animate-in slide-in-from-top-5">
           <ul className="container mx-auto px-4 py-3 space-y-1">
