@@ -1,17 +1,17 @@
 const multer = require("multer");
 const path = require("path");
 
-// Storage configuration
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/blogs/"); // Save images in uploads/blogs/ folder
+    cb(null, "uploads/blogs/"); 
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Rename file with timestamp
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
-// File filter to allow all image formats
+
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);
@@ -20,11 +20,11 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// Upload middleware
+
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 50 * 1024 * 1024 } // Limit file size to 50MB
+  limits: { fileSize: 50 * 1024 * 1024 } 
 });
 
 module.exports = upload;
