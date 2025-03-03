@@ -1,16 +1,16 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
-// Create the auth context
+
 export const AuthContext = createContext();
 
-// Custom hook to use the auth context
+
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Check localStorage on initial load
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
       } catch (error) {
         console.error("Error parsing user data:", error);
-        localStorage.removeItem('user'); // Remove invalid user data
+        localStorage.removeItem('user'); 
         setUser(null);
         setIsAuthenticated(false);
       }
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
   
-  // Value object to be provided to consumers
+
   const value = {
     isAuthenticated,
     setIsAuthenticated,
