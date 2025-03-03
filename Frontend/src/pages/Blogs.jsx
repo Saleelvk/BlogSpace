@@ -199,76 +199,96 @@ const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility
   };
 
   return (
-    <div className="group relative flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200">
-      {/* Image */}
-      <div className="relative overflow-hidden border-b">
-        <img
-          src={`${imgUrl}${post.image}`}
-          alt={post.title}
-          className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+<div className="group relative flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200">
+  {/* Image */}
+  <div className="relative overflow-hidden border-b">
+  <img
+  src={`${imgUrl}${post.image}`}
+  alt={post.title}
+  className="w-full h-52 object-cover transition-transform duration-500 group-hover:scale-105"
+/>
+
+  </div>
+
+  {/* Content */}
+  <div className="flex flex-col flex-grow p-4 justify-between">
+    {/* Title */}
+    <h3 className="font-semibold text-lg text-gray-900 transition-colors line-clamp-2">
+      {post.title.charAt(0).toUpperCase() + post.title.slice(1)}
+    </h3>
+
+    {/* Author & Date */}
+    <div className="flex justify-between items-center text-gray-600 text-sm mt-2">
+      <div className="flex items-center gap-2">
+        <span className="bg-gray-200 p-2 rounded-full flex items-center justify-center w-8 h-8 text-gray-800 font-semibold">
+          {post.author?.name.charAt(0).toUpperCase()}
+        </span>
+        <span className="text-sm font-medium">{post.author?.name || "Unknown Author"}</span>
       </div>
-
-      {/* Content */}
-      <div className="flex flex-col flex-grow p-4 justify-between">
-        {/* Title */}
-        <h3 className="font-semibold text-lg text-gray-900 transition-colors line-clamp-2">
-          {post.title.charAt(0).toUpperCase() + post.title.slice(1)}
-        </h3>
-
-        {/* Author & Date */}
-        <div className="flex justify-between items-center text-gray-600 text-sm mt-2">
-          <div className="flex items-center gap-2">
-            <span className="bg-gray-200 p-2 rounded-full flex items-center justify-center w-8 h-8 text-gray-800 font-semibold">
-              {post.author?.name.charAt(0).toUpperCase()}
-            </span>
-            <span className="text-sm font-medium">{post.author?.name || "Unknown Author"}</span>
-          </div>
-          <div className="text-xs text-gray-500">{new Date(post.createdAt).toDateString()}</div>
-        </div>
-
-        <div className="flex justify-between items-center pt-6 mt-auto">
-          {/* Left side with likes and views */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => handleLike(post._id)}
-              className={`flex items-center gap-1 text-sm font-medium transition-all ${
-                likes[post._id]?.liked ? "text-red-500" : "text-gray-600"
-              }`}
-            >
-              <Heart /> {likes[post._id]?.count || 0}
-            </button>
-
-            <div className="flex items-center gap-1 text-sm font-medium text-gray-600">
-              <Eye /> {views || 0}
-            </div>
-          </div>
-
-          {/* Middle - Toggle button for authors only */}
-          {isAuthor && (
-            <button
-              onClick={() => toggleVisibility(post._id)}
-              className={`flex items-center text-xs font-medium px-2 py-1 rounded-md transition-all ${
-                post.visibility === "private" 
-                  ? "bg-green-100 text-green-700 border border-green-300" 
-                  : "bg-gray-100 text-gray-700 border border-gray-300"
-              }`}
-            >
-              {post.visibility === "private" ? "Private" : "Public"}
-            </button>
-          )}
-
-          {/* Right side with read more */}
-          <a
-            href={`/post/${post._id}`}
-            onClick={handleReadMore}
-            className="text-black text-sm font-medium flex items-center transition-all hover:text-blue-800"
-          >
-            Read More <ArrowRight size={18} className="ml-1" />
-          </a>
-        </div>
-      </div>
+      <div className="text-xs text-gray-500">{new Date(post.createdAt).toDateString()}</div>
     </div>
+
+  
+    <div className="flex justify-between items-center pt-6 mt-auto">
+    
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => handleLike(post._id)}
+          className={`flex items-center gap-1 text-sm font-medium transition-all ${
+            likes[post._id]?.liked ? "text-red-500" : "text-gray-600"
+          }`}
+        >
+          <Heart /> {likes[post._id]?.count || 0}
+        </button>
+
+        <div className="flex items-center gap-1 text-sm font-medium text-gray-600">
+          <Eye /> {views || 0}
+        </div>
+      </div>
+
+    
+      <a
+        href={`/post/${post._id}`}
+        onClick={handleReadMore}
+        className="text-black text-sm font-medium flex items-center transition-all hover:text-blue-800"
+      >
+        Read More <ArrowRight size={18} className="ml-1" />
+      </a>
+    </div>
+
+    {/* Visibility Toggle */}
+    {isAuthor && (
+      <div className="relative flex items-center mt-4">
+        <label className="flex items-center cursor-pointer relative">
+          <input
+            type="checkbox"
+            checked={post.visibility === "private"}
+            onChange={() => toggleVisibility(post._id)}
+            className="hidden"
+          />
+          <span
+            className={`w-10 h-5 flex items-center rounded-full p-1 transition-all duration-300 ${
+              post.visibility === "private" ? "bg-green-500" : "bg-gray-300"
+            }`}
+          >
+            <span
+              className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-all duration-300 ${
+                post.visibility === "private" ? "translate-x-5" : "translate-x-0"
+              }`}
+            ></span>
+          </span>
+        </label>
+        {/* Hover Tooltip */}
+        <span className="absolute top-[-30px] left-1/2 transform -translate-x-1/2 text-xs font-medium text-white bg-black px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-300">
+          {post.visibility === "private" ? "Private" : "Public"}
+        </span>
+      </div>
+    )}
+  </div>
+</div>
+
+
   );
 };
+
 export default Blogs;
