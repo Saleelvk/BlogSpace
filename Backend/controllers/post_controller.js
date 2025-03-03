@@ -3,7 +3,7 @@ const Post = require("../models/post_model");
 
 const getAllPosts = async (req, res) => {
     try {
-      const posts = await Post.find().populate("author", "name"); // Ensure author is populated
+      const posts = await Post.find().populate("author", "name"); 
       res.json(posts);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -19,7 +19,7 @@ const togglePostVisibility = async (req, res) => {
           return res.status(404).json({ message: "Post not found" });
         }
     
-        // Toggle visibility
+   
         post.visibility = post.visibility === "private" ? "public" : "private";
         await post.save();
     
@@ -33,10 +33,10 @@ const ViewCount = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         if (!post) return res.status(404).json({ message: "Post not found" });
-        const userId = req.user.id; // Get user ID from token
+        const userId = req.user.id; 
         console.log(userId) 
     
-        // Ensure views is only counted once per user
+        
         if (!post.viewedBy.includes(userId)) {
           post.views += 1;
           post.viewedBy.push(userId);
@@ -59,7 +59,7 @@ const getPostById = async (req, res) => {
 
         if (!post) return res.status(404).json({ message: "Post not found" });
 
-        // Restrict private posts
+       
         if (post.visibility === "private" && (!req.user || post.author._id.toString() !== req.user._id.toString())) {
             return res.status(403).json({ message: "This post is private" });
         }
@@ -70,7 +70,7 @@ const getPostById = async (req, res) => {
     }
 };
 
-// Create a new post
+
 const createPost = async (req, res) => {
     try {
         const { title, content, visibility } = req.body;
@@ -84,14 +84,14 @@ const createPost = async (req, res) => {
         }
 
         const userId = new mongoose.Types.ObjectId(req.user._id);   
-        const imageUrl = req.file ? `/uploads/blogs/${req.file.filename}` : null; // Get uploaded image URL
+        const imageUrl = req.file ? `/uploads/blogs/${req.file.filename}` : null; 
 
         const newPost = new Post({ 
             title, 
             content, 
             author: userId, 
             visibility: visibility || "public",
-            image: imageUrl // Store image URL in the database
+            image: imageUrl 
         });
    
         await newPost.save();
@@ -105,22 +105,22 @@ const createPost = async (req, res) => {
 };
 
 
-// Update a post
+
 const updatePost = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
         if (!post) return res.status(404).json({ message: "Post not found" });
 
-        // Ensure only the author can update their post
+ 
         if (post.author.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "Unauthorized to update this post" });
         }
 
-        const imageUrl = req.file ? `/uploads/blogs/${req.file.filename}` : post.image; // Keep old image if not updating
+        const imageUrl = req.file ? `/uploads/blogs/${req.file.filename}` : post.image;
 
         const updatedPost = await Post.findByIdAndUpdate(
             req.params.id,
-            { ...req.body, image: imageUrl }, // Update image
+            { ...req.body, image: imageUrl }, 
             { new: true }
         )
         .populate({ path: "author", select: "name email" });
@@ -138,7 +138,7 @@ const deletePost = async (req, res) => {
         const post = await Post.findById(req.params.id);
         if (!post) return res.status(404).json({ message: "Post not found" });
 
-        // Ensure only the author can delete their post
+        
         if (post.author.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "you Can't delete this post " });
         }
