@@ -5,9 +5,9 @@ const { protect } = require("../middleware/auth_middleware");
  
 const router = express.Router();
 
-router.post("/:id", protect, addComment); // Add a comment
-router.get("/:id", getComments); // Get comments
-router.delete("/:id", protect, deleteComment); // Delete a comment
-router.post("/:id/like", protect, likeComment); // Like a comment
+router.post("/:id", protect, addComment); 
+router.get("/:id", getComments); 
+router.delete("/:id", protect, deleteComment); 
+router.post("/:id/like", protect, likeComment); 
 
 module.exports = router;
