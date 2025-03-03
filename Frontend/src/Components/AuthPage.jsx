@@ -6,7 +6,7 @@ import { api } from './api';
 import { useAuth } from '../Context/AuthProvider';
 
 const AuthPage = () => {
-  const { login } = useAuth(); // Using login from AuthContext
+  const { login } = useAuth(); 
   const navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useState(true);
@@ -15,23 +15,23 @@ const AuthPage = () => {
   const [error, setError] = useState('');
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
 
-  // Handle input changes
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Toggle between login and signup forms
+ 
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setError('');
   };
 
-  // Toggle password visibility
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  // Handle form submission
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -66,7 +66,7 @@ const AuthPage = () => {
     
     {/* Header Text */}
     <div className="text-center">
-      <h1 className="text-4xl font-bold text-white">Welcome to AppName</h1>
+      <h1 className="text-4xl font-bold text-white">Welcome to BlogSpace</h1>
       <p className="text-indigo-200 mt-8 text-lg">
         Join thousands of users and start your journey today.
       </p>
@@ -168,9 +168,6 @@ const AuthPage = () => {
     </p>
   </div>
 </div>
-
-
-
 
       </div>
     </div>
