@@ -2,10 +2,10 @@ const asyncHandler = require("express-async-handler");
 const Post = require("../models/post_model");
 const Comment = require("../models/commend_model");
 
-// Like a Post
+
 const likePost = asyncHandler(async (req, res) => {
-    const { id } = req.params; // Post ID
-    const userId = req.user._id; // Get user ID from authenticated request
+    const { id } = req.params;
+    const userId = req.user._id; 
 
     const post = await Post.findById(id);
     if (!post) {
@@ -15,12 +15,12 @@ const likePost = asyncHandler(async (req, res) => {
     const likeIndex = post.likes.indexOf(userId);
 
     if (likeIndex === -1) {
-        // User has not liked it yet, so like the post
+    
         post.likes.push(userId);
         await post.save();
         return res.status(200).json({ message: "Post liked", liked: true, likeCount: post.likes.length });
     } else {
-        // User already liked it, so unlike it
+
         post.likes.splice(likeIndex, 1);
         await post.save();
         return res.status(200).json({ message: "Post unliked", liked: false, likeCount: post.likes.length });
