@@ -8,7 +8,7 @@ const postSchema = new mongoose.Schema({
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
     visibility: { type: String, enum: ["public", "private"], default: "public" }, 
     views: { type: Number, default: 0 },
-    viewedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Track unique users who viewed
+    viewedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     image: { type: String, default: null }
 }, { timestamps: true }); 
 
