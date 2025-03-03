@@ -6,6 +6,7 @@ import defaultAvatar from "../assets/images/vector-flat-illustration-grayscale-a
 import blogs from "../assets/images/blog.png";
 import CommentSection from "../Components/CommendSection"; // Import the comment section component
 import { api, imgUrl } from "../Components/api";
+
 function ReadingPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -51,7 +52,6 @@ function ReadingPage() {
         headers: { Authorization: `Bearer ${token}` },
       });
       
-
       navigate("/blog");
     } catch (err) {
       const errorMessage =
@@ -84,15 +84,15 @@ function ReadingPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
-      {/* Header with Title, Edit & Delete Buttons */}
-      <div className="flex justify-between items-start">
-        <h1 className="text-4xl font-extrabold text-gray-900 leading-tight">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      {/* Header with Title, Edit & Delete Buttons - Mobile Friendly */}
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
           {post.title}
         </h1>
 
         {loggedInUserId === post.author?._id && (
-          <div className="flex gap-3">
+          <div className="flex gap-3 self-start">
             {/* Edit Button */}
             <button
               onClick={() => navigate(`/editpost/${id}`)}
@@ -119,47 +119,46 @@ function ReadingPage() {
           <img
             src={post.author.image}
             alt={post.author.name}
-            className="w-12 h-12 rounded-full border border-gray-300"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300"
           />
         ) : (
-          <div className="w-12 h-12 flex items-center justify-center rounded-full border border-gray-300 bg-gray-200 text-gray-700 font-semibold">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full border border-gray-300 bg-gray-200 text-gray-700 font-semibold">
             {post.author?.name ? (
               post.author.name.charAt(0).toUpperCase()
             ) : (
               <img
                 src={defaultAvatar}
                 alt="Default Avatar"
-                className="w-12 h-12 rounded-full"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
               />
             )}
           </div>
         )}
         <div>
-          <p className="text-lg font-semibold text-gray-700">
+          <p className="text-base sm:text-lg font-semibold text-gray-700">
             {post.author?.name || "Unknown"}
           </p>
-          <p className="text-sm text-gray-500">
+          <p className="text-xs sm:text-sm text-gray-500">
             Published on {new Date(post.createdAt).toDateString()}
           </p>
         </div>
       </div>
 
-     {/* Image */}
+      {/* Image */}
       {post?.image && (
-        <div className="mt-8 overflow-hidden rounded-lg shadow-lg">
-        <img
-  src={`${imgUrl}${post.image}`}
-  alt={post.title || "Blog Post Image"}
-  className="w-full object-cover max-h-[400px]"
-/>
-
+        <div className="mt-6 sm:mt-8 overflow-hidden rounded-lg shadow-lg">
+          <img
+            src={`${imgUrl}${post.image}`}
+            alt={post.title || "Blog Post Image"}
+            className="w-full object-cover max-h-[300px] sm:max-h-[400px]" 
+          />
         </div>
       )}
 
       {/* Content */}
-      <div className="mt-8 text-lg text-gray-800 leading-relaxed space-y-6">
+      <div className="mt-6 sm:mt-8 text-base sm:text-lg text-gray-800 leading-relaxed space-y-4 sm:space-y-6">
         {post.content.split("\n").map((paragraph, index) => (
-          <p key={index} className="first-letter:text-xl first-letter:text-gray-900">
+          <p key={index} className="first-letter:text-lg sm:first-letter:text-xl first-letter:text-gray-900">
             {paragraph}
           </p>
         ))}
