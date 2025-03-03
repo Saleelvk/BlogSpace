@@ -13,7 +13,7 @@ app.use(cors({
     origin: [
         "http://localhost:5173", 
         "https://blogspace-jh9a.onrender.com", 
-        "https://blogs-theta-five.vercel.app"  // Add Vercel URL here
+        "https://blog-space-lac.vercel.app"  // Add Vercel URL here
     ], 
     methods: ["GET", "POST", "PUT", "DELETE"],  
     credentials: true
