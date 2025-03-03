@@ -1,3 +1,190 @@
+import React, { useEffect, useState } from "react";
+import { useContext } from "react";
+import axios from "axios";
+import { Eye, MessageSquare, ArrowRight, Heart } from "lucide-react";
+import Email from "../Components/Email";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthProvider";
+import { api, imgUrl } from "../Components/api";
+
+const Blogs = () => {
+  const [authorizedPosts, setAuthorizedPosts] = useState([]);
+  const [unauthorizedPosts, setUnauthorizedPosts] = useState([]);
+  const [likes, setLikes] = useState({});
+  const [views, setViews] = useState({});
+  const [userId, setUserId] = useState(null);
+  const [filter, setFilter] = useState("all");
+  const [posts, setPosts] = useState([]);
+
+ useEffect(() => {
+  const fetchUser = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return; 
+
+    try {
+      const res = await api.get("/auth/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUserId(res.data._id);
+    } catch (err) {
+      console.error("Error fetching user:", err);
+    }
+  };
+
+  fetchUser();
+}, []);
+
+  
+ useEffect(() => {
+  if (!userId) return; 
+
+  const token = localStorage.getItem("token");
+
+  api.get("/post/", {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then((response) => {
+      const authorized = [];
+      const unauthorized = [];
+
+      response.data.reverse().forEach((post) => {
+        if (post.author?._id === userId) {
+          authorized.push(post);
+        } else if (post.visibility !== "private") {
+          unauthorized.push(post);
+        }
+
+        setLikes((prevLikes) => ({
+          ...prevLikes,
+          [post._id]: {
+            liked: post.likes.includes(userId),
+            count: post.likes.length,
+          },
+        }));
+
+        setViews((prevViews) => ({
+          ...prevViews,
+          [post._id]: post.views || 0,
+        }));
+      });
+
+      setAuthorizedPosts(authorized);
+      setUnauthorizedPosts(unauthorized);
+    })
+    .catch((error) => console.error("Error fetching blogs:", error));
+}, [userId]);
+
+  const handleLike = async (postId) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await api.post(`/post/${postId}/like`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setLikes((prevLikes) => ({
+        ...prevLikes,
+        [postId]: {
+          liked: response.data.liked,
+          count: response.data.likeCount,
+        },
+      }));
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
+  };
+
+  const handleView = async (postId) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await api.post(`/post/${postId}/view`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      setViews((prevViews) => ({
+        ...prevViews,
+        [postId]: response.data.views,
+      }));
+      
+    } catch (error) {
+      console.error("Error updating view count:", error);
+    }
+  };
+
+  const toggleVisibility = async (postId) => {
+    try {
+      const token = localStorage.getItem("token");
+
+
+      const res = await api.put(`/post/${postId}/visibility`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      
+      console.log(res)
+      setAuthorizedPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === postId ? { ...post, visibility: res.data.visibility } : post
+        )
+      );
+  
+      setUnauthorizedPosts((prevPosts) =>
+        prevPosts.map((post) =>
+          post._id === postId ? { ...post, visibility: res.data.visibility } : post
+        )
+      );
+    } catch (error) {
+      console.error("Error toggling visibility:", error);
+    }
+  };
+  
+  return (
+    <div>
+      <div className="p-3 max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-6">All Blogs</h2>
+        <div className="flex justify-center space-x-4 mb-6">
+        <NavLink
+              to="/createBlog"
+              className="  hover:bg-indigo-600  text-sm  md:text-mdfont-semibold md:px-6 px-1 py-3  hover: rounded-md border border-blue-600"
+            >
+              Create Blog
+            </NavLink>
+
+          <button
+            onClick={() => setFilter("myBlogs")}
+            className={`px-4 py-2 rounded-lg text-white font-semibold ${
+              filter === "myBlogs" ? "bg-blue-600" : "bg-gray-500"
+            }`}
+          >
+            My Blogs
+          </button>
+          <button
+            onClick={() => setFilter("otherBlogs")}
+            className={`px-4 py-2 rounded-lg text-white font-semibold ${
+              filter === "otherBlogs" ? "bg-blue-600" : "bg-gray-500"
+            }`}
+          >
+            Other Blogs
+          </button>
+          
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {(filter === "myBlogs" ? authorizedPosts : unauthorizedPosts).map((post) => (
+            <BlogCard
+              key={post._id}
+              post={post}
+              likes={likes}
+              views={views[post._id] || 0}
+              handleLike={handleLike}
+              handleView={handleView}
+              toggleVisibility={toggleVisibility}
+            />
+          ))}
+        </div>
+      </div>
+      <Email />
+    </div>
+  );
+};
+
 const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility }) => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -92,3 +279,5 @@ const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility
     </div>
   );
 };
+
+export default Blogs;
