@@ -253,7 +253,7 @@ const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility
                   ? "bg-green-100 text-green-700 border border-green-300" 
                   : "bg-gray-100 text-gray-700 border border-gray-300"
               }`}
-            >sdf
+            >
               {post.visibility === "private" ? "Private" : "Public"}
             </button>
           )}
