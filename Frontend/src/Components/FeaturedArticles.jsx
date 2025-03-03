@@ -13,7 +13,7 @@ function FeaturedArticles() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        setPosts(response.data.reverse().slice(0, 3)); // Limit to 3 posts
+        setPosts(response.data.reverse().slice(0, 3)); 
       })
       .catch((error) => {
         console.error("Error fetching posts:", error);
