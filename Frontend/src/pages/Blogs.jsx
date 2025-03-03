@@ -199,7 +199,7 @@ const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility
   };
 
   return (
-    <div className="group relative flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200">
+    <div className="relative flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200">
       {/* Image */}
       <div className="relative overflow-hidden border-b">
         <img
@@ -227,27 +227,20 @@ const BlogCard = ({ post, likes, views, handleLike, handleView, toggleVisibility
           <div className="text-xs text-gray-500">{new Date(post.createdAt).toDateString()}</div>
         </div>
 
-        {/* Visibility Toggle for Author - Now prominently displayed at top */}
+        {/* VISIBILITY TOGGLE - Made much more visible */}
         {isAuthor && (
-          <div className="flex items-center justify-between mt-3 mb-3 p-2 bg-gray-50 rounded-lg">
-            <span className="text-sm font-medium text-gray-700">
-              {post.visibility === "private" ? "Private Post" : "Public Post"}
-            </span>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={post.visibility === "private"}
-                onChange={() => toggleVisibility(post._id)}
-                className="sr-only"
-              />
-              <div className={`w-12 h-6 rounded-full transition-colors duration-300 ${
-                post.visibility === "private" ? "bg-green-500" : "bg-gray-300"
-              }`}>
-                <div className={`absolute w-4 h-4 bg-white rounded-full shadow-md transform transition-all duration-300 top-1 ${
-                  post.visibility === "private" ? "right-1" : "left-1"
-                }`}></div>
-              </div>
-            </label>
+          <div className="mt-4 mb-3 p-2 bg-blue-50 rounded-md border border-blue-200">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-blue-700">
+                Post Status: {post.visibility === "private" ? "Private" : "Public"}
+              </span>
+              <button
+                onClick={() => toggleVisibility(post._id)}
+                className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition-colors"
+              >
+                Toggle Visibility
+              </button>
+            </div>
           </div>
         )}
 
