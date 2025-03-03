@@ -13,7 +13,7 @@ app.use(cors({
     origin: [
         "http://localhost:5173", 
         "https://blogspace-jh9a.onrender.com", 
-        "https://blog-space-lac.vercel.app"  // Add Vercel URL here
+        "https://blog-space-lac.vercel.app"  
     ], 
     methods: ["GET", "POST", "PUT", "DELETE"],  
     credentials: true
@@ -32,9 +32,6 @@ app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/post", postRoutes);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/comment",commendRoute);
-
-
-// Use Routes
 
 
 
