@@ -13,8 +13,7 @@ function CommentSection({ postId }) {
   const [user, setUser] = useState(null);
   const token = localStorage.getItem("token");
 
-  console.log(comments);
-  // Get logged in user from token
+ 
   useEffect(() => {
     if (token) {
       try {
@@ -26,25 +25,24 @@ function CommentSection({ postId }) {
     }
   }, [token]);
 
-  // Fetch comments
   const fetchComments = async () => {
     try {
       setLoading(true);
-      // Fixed: The backend route uses "comment" not "commend"
+    
       const response = await api.get(`/comment/${postId}`);
       setComments(response.data);
       setError("");
     } catch (err) {
       console.error("Error fetching comments:", err);
       setError("Failed to load comments");
-      // If error persists, set empty comments array to prevent continuous loading state
+  
       setComments([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Load comments on component mount
+
   useEffect(() => {
     if (postId) {
       fetchComments();
@@ -67,15 +65,15 @@ function CommentSection({ postId }) {
 
     try {
       setLoading(true);
-      // Fixed: The backend route uses "comment" not "commend"
+ 
       await api.post(`/comment/${postId}`, 
       { text: newComment }, 
       { headers: { Authorization: `Bearer ${token}` } }
     );
     
 
-      setNewComment(""); // Clear comment box
-      fetchComments(); // Refresh comments
+      setNewComment(""); 
+      fetchComments(); 
       setError("");
     } catch (err) {
       console.error("Error adding comment:", err);
@@ -93,11 +91,11 @@ function CommentSection({ postId }) {
 
     try {
       setLoading(true);
-      // Fixed: The backend route uses "comment" not "commend"
+
       await api.delete(`/comment/${commentId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+    
 
       // Remove the comment from state
       setComments(comments.filter((comment) => comment._id !== commentId));
@@ -118,13 +116,13 @@ function CommentSection({ postId }) {
     }
 
     try {
-      // Fixed: The backend route uses "comment" not "commend"
+     
       await api.post(`/comment/${commentId}/like`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
 
-      // Refresh comments to show updated like count
+    
       fetchComments();
     } catch (err) {
       console.error("Error liking comment:", err);
